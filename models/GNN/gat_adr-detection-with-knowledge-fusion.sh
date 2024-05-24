@@ -20,6 +20,10 @@
 #SBATCH --mail-type=ALL # (BEGIN, END, FAIL or ALL)
 #SBATCH --mail-user=mohamed-amine.kenzeddine@etu.univ-amu.fr
 
+# Supprimer les fichiers de sortie et d'erreur existants
+rm -f ./out_gat.txt
+rm -f ./err_gat.txt
+
 
 # Installation des bibliothèques nécessaires
 pip install torch-geometric
