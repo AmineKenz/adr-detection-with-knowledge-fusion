@@ -1,4 +1,9 @@
 # %%
+import sys
+import os
+
+# Ajoutez le chemin absolu au dossier contenant le module helpers
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/../'))
 import json
 #from pkgutil import get_data
 import torch , pickle
