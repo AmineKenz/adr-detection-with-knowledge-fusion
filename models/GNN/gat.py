@@ -10,12 +10,35 @@ from torch.optim import Adam
 from pytorch_lightning.loggers import TensorBoardLogger
 import pytorch_lightning as pl
 from torch_geometric.nn.pool import SAGPooling, global_add_pool
-from torch_geometric.utils import filter_adj  # Corrected import
 from torch_geometric.nn import global_mean_pool as gap, global_max_pool as gmp
 import torch
 from torch_scatter import scatter
 
 logger = TensorBoardLogger(name="EXPERIMENT_DRUGO_SYMP", save_dir="../tb_logs", version=1)
+
+
+# Custom filter_adj function
+def filter_adj(edge_index, edge_attr, perm, num_nodes=None):
+    device = edge_index.device
+
+    if num_nodes is None:
+        num_nodes = edge_index.max().item() + 1
+
+    mask = torch.zeros(num_nodes, dtype=torch.bool, device=device)
+    mask[perm] = 1
+
+    edge_mask = mask[edge_index[0]] & mask[edge_index[1]]
+
+    edge_index = edge_index[:, edge_mask]
+    if edge_attr is not None:
+        edge_attr = edge_attr[edge_mask]
+
+    idx = torch.zeros(num_nodes, dtype=torch.long, device=device)
+    idx[perm] = torch.arange(perm.size(0), device=device)
+
+    edge_index = idx[edge_index]
+
+    return edge_index, edge_attr
 
 
 # Custom topk function
@@ -143,27 +166,4 @@ class GraphAttentionModelPooling(nn.Module):
         self.weight_decay = config['weight_decay']
         self.val_index = config['val_index']
         self.train_index = config['train_index']
-        self.graph_encoder = GAT(self.num_node_features, self.gnn_hidden_size, self.num_gnn_hidden,
-                                 self.num_encoded_features)
-
-        self.pooler = SAGPooling(self.num_encoded_features, ratio=0.5, Conv=GATConv)
-
-    def forward(self, x, edge_index):
-        graph_out = self.graph_encoder(x, edge_index)
-
-        ## pooling
-
-        out = self.pooler(graph_out, edge_index)
-        x2 = cat([gmp(out[0], out[3]), gap(out[0], out[3])], dim=1).squeeze()
-
-        return x2
-
-
-class SAGNet(nn.Module):
-    def __init__(self, **kwargs):
-        super(SAGNet, self).__init__()
-
-        self.num_features = kwargs['num_features']
-        self.nhid = kwargs['nhid']
-        # self.num_classes = args.num_classes
-        self.pooling
+        self.graph
