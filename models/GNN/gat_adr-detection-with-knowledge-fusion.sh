@@ -12,10 +12,6 @@
 # Nombre de GPU à utiliser
 #SBATCH --gres=gpu:3
 
-# Supprimer les fichiers de sortie et d'erreur existants
-rm -f ./out_gat.txt
-rm -f ./err_gat.txt
-
 # Fichiers de sortie et d'erreur
 #SBATCH --output=./out_gat.txt
 #SBATCH --error=./err_gat.txt
@@ -23,9 +19,6 @@ rm -f ./err_gat.txt
 # Notifications par email
 #SBATCH --mail-type=ALL # (BEGIN, END, FAIL or ALL)
 #SBATCH --mail-user=mohamed-amine.kenzeddine@etu.univ-amu.fr
-
-
-
 
 # Installation des bibliothèques nécessaires
 pip install torch-geometric
