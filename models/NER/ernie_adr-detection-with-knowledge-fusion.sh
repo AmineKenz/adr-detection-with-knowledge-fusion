@@ -20,9 +20,6 @@
 #SBATCH --mail-type=ALL # (BEGIN, END, FAIL or ALL)
 #SBATCH --mail-user=mohamed-amine.kenzeddine@etu.univ-amu.fr
 
-# Supprimer les fichiers de sortie et d'erreur existants
-rm -f ./out_ernie_git_adr-detection-with-knowledge-fusion.txt
-rm -f ./err_ernie_git_adr-detection-with-knowledge-fusion.txt
 
 
 # Installation des bibliothèques nécessaires
