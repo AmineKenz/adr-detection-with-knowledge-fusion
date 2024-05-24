@@ -11,7 +11,7 @@ from torch.optim import Adam
 from pytorch_lightning.loggers import TensorBoardLogger
 import pytorch_lightning as pl
 from torch_geometric.nn.pool import SAGPooling, global_add_pool
-from torch_geometric.nn.pool.topk_pool import topk,filter_adj
+from torch_geometric.utils import topk, filter_adj
 from torch_geometric.nn import global_mean_pool as gap, global_max_pool as gmp
 logger = TensorBoardLogger(name="EXPERIMENT_DRUGO_SYMP", save_dir="../tb_logs", version=1)
 
