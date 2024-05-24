@@ -25,7 +25,7 @@ pip install torch-geometric
 pip install torch
 pip install scikit-learn
 pip install pytorch-lightning
-pip install torch_scatter
+pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.1+cu117.html
 
 # Exécution du script Python
 python gat.py
